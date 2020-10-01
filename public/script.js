@@ -55,6 +55,4 @@ $submitButton.click((e)=>{
                 $newAction.val('');
             });
     }
-
-
 })

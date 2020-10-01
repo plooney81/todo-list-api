@@ -1,5 +1,16 @@
 const todoList = require('./toDoList');
 
+function returnItemIndex(id){
+    const toDoItemIndex = todoList.findIndex(element =>{
+        if(element.id === parseInt(id, 10)){
+          return true;
+        }
+        return false;
+      })
+    
+    return toDoItemIndex;
+}
+
 function findTodoId(req, res){
     const {id} = req.params;
     const toDoItem = todoList.find(element =>{
@@ -29,12 +40,7 @@ function postTodoItem(req, res){
 function putItem(req, res){
     const {id} = req.params;
 
-    const toDoItemIndex = todoList.findIndex(element =>{
-      if(element.id === parseInt(id, 10)){
-        return true;
-      }
-      return false;
-    })
+    const toDoItemIndex = returnItemIndex(id);
   
     if(toDoItemIndex === -1){
       res.status(404).json()
@@ -53,12 +59,7 @@ function putItem(req, res){
 function patchItem(req, res){
     const {id} = req.params;
 
-    const toDoItemIndex = todoList.findIndex(element => {
-        if(element.id === parseInt(id, 10)){
-            return true;
-        }
-        return false;
-    })
+    const toDoItemIndex = returnItemIndex(id);
 
     if(toDoItemIndex === -1){
         res.status(404).json()
@@ -75,12 +76,7 @@ function patchItem(req, res){
 function deleteItem(req, res){
     const { id }  = req.params;
 
-    const toDoItemIndex = todoList.findIndex(element =>{
-      if(element.id === parseInt(id, 10)){
-        return true;
-      }
-      return false;
-    })
+    const toDoItemIndex = returnItemIndex(id);
   
     if(toDoItemIndex === -1){
       res.status(404).json()
