@@ -1,4 +1,6 @@
 const http = require('http');
+const todoList = require('./toDoList');
+const todoListFunctions = require('./todoListFunctions');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,24 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('./public'));
 
-const todoList = [
-  {
-    id: 1,
-    todo: 'Implement a REST API',
-  },
-  {
-    id: 2,
-    todo: 'Build a frontend',
-  },
-  {
-    id: 3,
-    todo: '???',
-  },
-  {
-    id: 4,
-    todo: 'Profit!',
-  },
-];
+
 
 // GET /api/todos
 app.get('/api/todos', (req, res)=>{
@@ -40,77 +25,19 @@ app.get('/api/todos', (req, res)=>{
 })
 
 // GET /api/todos/:id
-app.get('/api/todos/:id', (req, res)=>{
-  const {id} = req.params;
-  const toDoItem = todoList.find(element =>{
-    if(element.id === parseInt(id, 10)){
-      return true;
-    }
-    return false;
-  })
-
-  !toDoItem ? res.status(404).json() : res.status(200).json(toDoItem);
-})
+app.get('/api/todos/:id', todoListFunctions.findTodoId);
 
 // POST /api/todos
-app.post('/api/todos', (req, res)=>{
-  const [id, todo] = [parseInt(req.body.id, 10), req.body.todo];
-  if(!id || !todo){
-    res.status(422).json();
-  }else{
-    const newToDoItem = {
-      id: id,
-      todo: todo
-    };
-    todoList.push(newToDoItem);
-    res.status(201).json()
-  }
-})
+app.post('/api/todos', todoListFunctions.postTodoItem);
 
 // PUT /api/todos/:id
-app.put('/api/todos/:id', (req, res)=>{
-  const {id} = req.params;
+app.put('/api/todos/:id', todoListFunctions.putItem);
 
-  const toDoItemIndex = todoList.findIndex(element =>{
-    if(element.id === parseInt(id, 10)){
-      return true;
-    }
-    return false;
-  })
-
-  if(toDoItemIndex === -1){
-    res.status(404).json()
-  }else{
-    const [newId, todo] = [parseInt(req.body.id, 10), req.body.todo];
-    if(!newId || !todo){
-      res.status(422).json();
-    }else{
-      todoList[toDoItemIndex].id = newId;
-      todoList[toDoItemIndex].todo = todo;
-      res.status(202).json()
-    }
-  }
-})
+// PATCH /api/todos/:id
+app.patch('/api/todos/:id', todoListFunctions.patchItem);
 
 // DELETE /api/todos/:id
-app.delete('/api/todos/:id', (req, res)=>{
-  const { id }  = req.params;
-
-  const toDoItemIndex = todoList.findIndex(element =>{
-    if(element.id === parseInt(id, 10)){
-      return true;
-    }
-    return false;
-  })
-
-  if(toDoItemIndex === -1){
-    res.status(404).json()
-  }else{
-    todoList.splice(toDoItemIndex, 1)
-    res.status(200).json()
-  }
-
-})
+app.delete('/api/todos/:id', todoListFunctions.deleteItem);
 
 
 server.listen(port, hostname, ()=>{
