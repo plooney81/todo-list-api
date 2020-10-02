@@ -8,24 +8,30 @@ async function getList(){
         
         const newItem = response.data.map(element => {
             return `
-                <li class="list-group-item">
-                        ${element.id} --> ${element.todo}
+                <li class="list-group-item d-flex justify-content-between">
+                    <div class="d-flex align-items-center"> 
+                        ${element.id} --> <span class='text'>${element.todo}</span><input type="text" class="form-control ml-3 edit" value="${element.todo}" style="display: none;"></input>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary editButton" data-id="${element.id}">Edit</button>
+                        <button type="button" class="btn btn-danger del" data-id="${element.id}">Del</button>
+                    </div>
                 </li>
             `
         });
 
         $putListHere.append(`
             <h1 class="text-justify">List: </h1>
-            <ul class="list-group">${newItem.join('')}</ul>
+            <ol class="list-group">${newItem.join('')}<ol>
 
             <form class="mt-3">
                 <div class="form-group">
                     <label for="newItemId">Item Id</label>
-                    <input type="number" class="form-control" id="newItemId" placeholder="5">
+                    <input type="number" class="form-control" id="newItemId" placeholder="5" required>
                 </div>
                 <div class="form-group">
                     <label for="newAction">Action</label>
-                    <input type="text" class="form-control" id="newAction" placeholder="Make more money">
+                    <input type="text" class="form-control" id="newAction" placeholder="Make more money" required>
                 </div>
                 <button type="submit" class="btn btn-primary" id="addNewItem">Add</button>
             </form>
@@ -35,9 +41,8 @@ async function getList(){
 
 $(document).ready(()=>{getList();})
 
-$(document).click((e)=>{
+$(document).on('click', "#addNewItem", (e)=>{
     e.preventDefault();
-   if(e.target.id === 'addNewItem'){
     console.log('HELLO');
     const $newItemId = $('#newItemId');
     const $newAction = $('#newAction');
@@ -52,5 +57,52 @@ $(document).click((e)=>{
                 $newAction.val('');
             });
     }
-   }
 })
+
+$(document).on('click',".del", (e)=>{
+       axios.delete(`http://127.0.0.1:3000/api/todos/${e.target.dataset.id}`) //look on that element for any attribute that has a data-prefix specifically for the id one.
+        .then((res)=>{
+            if(res.status < 400 ){
+                getList();
+            }
+       })
+})
+
+$(document).on('click', ".editButton", (e)=>{
+    const $editButton = $(e.target);
+    const $editSpan = $editButton.parents('li').find('.text');
+    const $editInput = $editButton.parents('li').find('.edit');
+    debugger
+    if($editButton.html() === 'Edit'){
+        $editSpan.toggle();
+        $editInput.toggle();
+        $editButton.html('Submit');
+
+    }else if($editButton.html() === "Submit"){
+        axios.patch(`http://127.0.0.1:3000/api/todos/${e.target.dataset.id}`, {
+            todo : $editInput.val()
+        }) //look on that element for any attribute that has a data-prefix specifically for the id one.
+        .then((res)=>{
+            if(res.status < 400 ){
+                getList();
+                
+            }
+            $editSpan.toggle();
+            $editInput.toggle();
+       })
+
+    }
+
+
+})
+
+//    }else if(e.target.id.slice(0, 4) === 'edit'){
+//         const $editButton = $(`#${e.target.id}`);
+//         const $editSpan = $(`#${e.target.id.slice(4)}`)
+//         $editSpan.toggle();
+//         $editSpan.append();
+//         $editButton.html('Submit');
+//     //    axios.put(`http://127.0.0.1:3000/api/todos/${e.target.id.slice(4)}`, {
+//     //        //
+//     //    })
+//    }
