@@ -7,9 +7,9 @@
 ## About this repository
 * This repo was created for two reasons:
   
-    1 To test knowledge of how to create a REST API
+    1. To test knowledge of how to create a REST API
 
-    2 To tie together our newly created REST API and previous front end knowledge to create a static site.
+    2. To tie together our newly created REST API and previous front end knowledge to create a static site.
 
 ## Lessons Learned
 * How to create a REST API
@@ -22,4 +22,4 @@
 * Express
 * jQuery
 * AXIOS
-* Boostrap
+* Bootstrap
