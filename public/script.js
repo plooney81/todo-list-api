@@ -95,14 +95,3 @@ $(document).on('click', ".editButton", (e)=>{
 
 
 })
-
-//    }else if(e.target.id.slice(0, 4) === 'edit'){
-//         const $editButton = $(`#${e.target.id}`);
-//         const $editSpan = $(`#${e.target.id.slice(4)}`)
-//         $editSpan.toggle();
-//         $editSpan.append();
-//         $editButton.html('Submit');
-//     //    axios.put(`http://127.0.0.1:3000/api/todos/${e.target.id.slice(4)}`, {
-//     //        //
-//     //    })
-//    }
