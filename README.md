@@ -15,7 +15,9 @@
 
 ## Lessons Learned
 * How to create a REST API
-* How to use Express Middleware packages (specifically the body-parser package)
+* How to use Express Middleware packages
+  * body-parser
+  * methodOverride 
 * How to use AXIOS GET as well as other Front End techniques to load specific data on to a page
 * How to use AXIOS POST to add data from the user to our server
 * How to use AXIOS PATCH so the user can edit data from the page and then send it to the server with the updated data.
