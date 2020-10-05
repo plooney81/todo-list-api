@@ -8,8 +8,8 @@
 * Main goals of this repository:
   
     1. To test knowledge of how to create a REST API
-
-    2. To tie together our newly created REST API/backend techniques and previous front end knowledge to create a static site.
+    2. To tie together our newly created REST API/backend techniques and previous front end knowledge to create a static site
+    3. To gain experience in using express view engines
 
 ## Lessons Learned
 * How to create a REST API
@@ -17,7 +17,9 @@
 * How to use AXIOS GET as well as other Front End techniques to load specific data on to a page
 * How to use AXIOS POST to add data from the user to our server
 * How to use AXIOS PATCH so the user can edit data from the page and then send it to the server with the updated data.
-* jQuery --> more aesthetically pleasing to use $(document).on('click', "css selector", function) instead of $(document).onclick((e)=>{ if(e.target.id === ...)}) 
+* jQuery --> more aesthetically pleasing to use $(document).on('click', "css selector", function) instead of $(document).onclick((e)=>{ if(e.target.id === ...)})
+* How to use express view engine for server side rendering
+  * To access values in a form submission, the input types must have a name!
 
 ## Technology Used
 * Node.js

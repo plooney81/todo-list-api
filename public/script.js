@@ -23,23 +23,23 @@ async function getList(){
     })
 }
 
-$(document).on('click', "#addNewItem", (e)=>{
-    e.preventDefault();
-    console.log('HELLO');
-    const $newItemId = $('#newItemId');
-    const $newAction = $('#newAction');
-    if($newItemId.val() && $newAction.val()){
-        axios.post('http://127.0.0.1:3000/api/todos', {
-            id: $newItemId.val(),
-            todo: $newAction.val()
-        })
-            .then(()=>{
-                getList()
-                $newItemId.val('');
-                $newAction.val('');
-            });
-    }
-})
+// $(document).on('click', "#addNewItem", (e)=>{
+//     e.preventDefault();
+//     console.log('HELLO');
+//     const $newItemId = $('#newItemId');
+//     const $newAction = $('#newAction');
+//     if($newItemId.val() && $newAction.val()){
+//         axios.post('http://127.0.0.1:3000/api/todos', {
+//             id: $newItemId.val(),
+//             todo: $newAction.val()
+//         })
+//             .then(()=>{
+//                 getList()
+//                 $newItemId.val('');
+//                 $newAction.val('');
+//             });
+//     }
+// })
 
 $(document).on('click',".del", (e)=>{
        axios.delete(`http://127.0.0.1:3000/api/todos/${e.target.dataset.id}`) //look on that element for any attribute that has a data-prefix specifically for the id one.

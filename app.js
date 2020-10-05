@@ -33,7 +33,7 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/todos', (req, res)=>{
-  res.render('list.html', {
+  res.render('list', {
     locals: {
       title: "List",
       todoList: todoList
@@ -42,6 +42,28 @@ app.get('/todos', (req, res)=>{
       head: 'partials/head'
     }
   });
+})
+
+app.post('/todos', (req, res)=>{
+  const [id, todo] = [parseInt(req.body.newItemId, 10), req.body.newAction];
+  if(!id || !todo){
+    res.status(422).json();
+  }else{
+    const newToDoItem = {
+      id: id,
+      todo: todo
+    };
+    todoList.push(newToDoItem);
+    res.status(201).render('list', {
+      locals: {
+        todoList: todoList,
+        title: "List"
+      },
+      partials: {
+        head: 'partials/head'
+      }
+    });
+  }
 })
 
 // GET /api/todos
