@@ -3,6 +3,7 @@
 - [About this repository](#about-this-repository)
 - [Lessons Learned](#lessons-learned)
 - [Technology Used](#technology-used)
+- [Preview](#preview)
 - [Code Snippets](#code-snippets)
   
 ## About this repository
@@ -29,6 +30,9 @@
 * jQuery
 * AXIOS
 * Bootstrap
+
+## Preview
+![](TodoList.gif)
 
 ## Code Snippets
 1. AXIOS Get
