@@ -86,10 +86,35 @@ function deleteItem(req, res){
     }
 }
 
+function renderHome(req, res){
+  res.render('home', {
+    locals: {
+      title: "Home"
+    },
+    partials: {
+      head: 'partials/head'
+    }
+  }); 
+}
+
+function renderList(req, res){
+  res.render('list', {
+    locals: {
+      title: "List",
+      todoList: todoList
+    },
+    partials: {
+      head: 'partials/head'
+    }
+  });
+}
+
 module.exports = {
     findTodoId: findTodoId,
     postTodoItem: postTodoItem,
     putItem: putItem,
     patchItem: patchItem,
-    deleteItem: deleteItem
+    deleteItem: deleteItem,
+    renderHome: renderHome,
+    renderList: renderList
 }

@@ -4,6 +4,8 @@ const todoListFunctions = require('./todoListFunctions');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override')
+
 
 const es6Renderer = require('express-es6-template-engine');
 app.engine('html', es6Renderer); // use es6renderer for html view templates
@@ -15,34 +17,16 @@ const port = 3000;
 
 const server = http.createServer(app);
 
+app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('./public'));
 
 // homepage route
-app.get('/', (req, res)=>{
-  res.render('home', {
-    locals: {
-      title: "Home"
-    },
-    partials: {
-      head: 'partials/head'
-    }
-  }); 
-})
+app.get('/', todoListFunctions.renderHome);
 
-app.get('/todos', (req, res)=>{
-  res.render('list', {
-    locals: {
-      title: "List",
-      todoList: todoList
-    },
-    partials: {
-      head: 'partials/head'
-    }
-  });
-})
+app.get('/todos', todoListFunctions.renderList)
 
 app.post('/todos', (req, res)=>{
   const [id, todo] = [parseInt(req.body.newItemId, 10), req.body.newAction];
@@ -63,6 +47,24 @@ app.post('/todos', (req, res)=>{
         head: 'partials/head'
       }
     });
+  }
+})
+
+app.delete('/todos/:id', (req, res)=>{
+  const { id }  = req.params;
+
+  const toDoItemIndex = todoList.findIndex(element =>{
+    if(element.id === parseInt(id, 10)){
+      return true;
+    }
+    return false;
+  })
+
+  if(toDoItemIndex === -1){
+    res.status(404).send()
+  }else{
+    todoList.splice(toDoItemIndex, 1)
+    res.status(200).redirect('/todos');
   }
 })
 

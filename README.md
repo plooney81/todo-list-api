@@ -22,6 +22,8 @@
 * jQuery --> more aesthetically pleasing to use $(document).on('click', "css selector", function) instead of $(document).onclick((e)=>{ if(e.target.id === ...)})
 * How to use express view engine for server side rendering
   * View templates and Partials
+  * res.render()
+    * sends data to a template and returns HTML
   * To access values in a form submission, the input types must have a name!
 
 ## Technology Used

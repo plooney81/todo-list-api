@@ -13,11 +13,13 @@
                 return `
                     <li class="list-group-item d-flex justify-content-between">
                         <div class="d-flex align-items-center"> 
-                            ${element.id} --> <span class='text'>${element.todo}</span><input type="text" class="form-control ml-3 edit" value="${element.todo}" style="display: none;"></input>
+                            ${element.id} -->&nbsp;&nbsp;<span class='text'>${element.todo}</span><input type="text" class="form-control ml-3 edit" value="${element.todo}" style="display: none;"></input>
                         </div>
-                        <div>
+                        <div class="d-flex">
                             <button type="button" class="btn btn-primary editButton" data-id="${element.id}">Edit</button>
-                            <button type="button" class="btn btn-danger del" data-id="${element.id}">Del</button>
+                            <form action="/todos/${element.id}?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-danger del" data-id="${element.id}">Del</button>
+                            </form>
                         </div>
                     </li>
                 `
