@@ -1,14 +1,17 @@
 const http = require('http');
 const todoList = require('./toDoList');
 const todoListFunctions = require('./todoListFunctions');
-
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
+
+const es6Renderer = require('express-es6-template-engine');
+app.engine('html', es6Renderer); // use es6renderer for html view templates
+app.set('views', 'templates'); // look in the templates folder for view templates
+app.set('view engine', 'html'); // set the view engine to use the 'html' views
 
 const hostname = '127.0.0.1';
 const port = 3000;
-
-const app = express();
 
 const server = http.createServer(app);
 
@@ -17,7 +20,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('./public'));
 
+// homepage route
+app.get('/', (req, res)=>{
+  res.render('home', {
+    locals: {
+      title: "Home"
+    },
+    partials: {
+      head: 'partials/head'
+    }
+  }); 
+})
 
+app.get('/todos', (req, res)=>{
+  res.render('list.html', {
+    locals: {
+      title: "List",
+      todoList: todoList
+    },
+    partials: {
+      head: 'partials/head'
+    }
+  });
+})
 
 // GET /api/todos
 app.get('/api/todos', (req, res)=>{

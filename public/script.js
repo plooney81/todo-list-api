@@ -2,7 +2,6 @@ const $putListHere = $('#putListHere');
 const $submitButton = $('#addNewItem');
 
 async function getList(){
-    $putListHere.empty();
     axios.get(`http://127.0.0.1:3000/api/todos`)
     .then((response)=>{
         
@@ -20,26 +19,9 @@ async function getList(){
             `
         });
 
-        $putListHere.append(`
-            <h1 class="text-justify">List: </h1>
-            <ol class="list-group">${newItem.join('')}<ol>
-
-            <form class="mt-3">
-                <div class="form-group">
-                    <label for="newItemId">Item Id</label>
-                    <input type="number" class="form-control" id="newItemId" placeholder="5" required>
-                </div>
-                <div class="form-group">
-                    <label for="newAction">Action</label>
-                    <input type="text" class="form-control" id="newAction" placeholder="Make more money" required>
-                </div>
-                <button type="submit" class="btn btn-primary" id="addNewItem">Add</button>
-            </form>
-        `);
+        $putListHere.find('.list-group').html(newItem.join(''))
     })
 }
-
-$(document).ready(()=>{getList();})
 
 $(document).on('click', "#addNewItem", (e)=>{
     e.preventDefault();
@@ -72,7 +54,6 @@ $(document).on('click', ".editButton", (e)=>{
     const $editButton = $(e.target);
     const $editSpan = $editButton.parents('li').find('.text');
     const $editInput = $editButton.parents('li').find('.edit');
-    debugger
     if($editButton.html() === 'Edit'){
         $editSpan.toggle();
         $editInput.toggle();
@@ -85,8 +66,8 @@ $(document).on('click', ".editButton", (e)=>{
         .then((res)=>{
             if(res.status < 400 ){
                 getList();
-                
             }
+            $editButton.html('Edit');
             $editSpan.toggle();
             $editInput.toggle();
        })
